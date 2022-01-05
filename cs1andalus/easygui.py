@@ -46,7 +46,10 @@ __all__ = ['ynbox'
 
 import logging
 import sys, os
-from tkinter import *
+try:
+	from tkinter import *
+except ImportError:
+	from Tkinter import *
 if TkVersion < 8.0 :
 	logging.info ("\n" * 3)
 	logging.info ("*"*75)
@@ -70,8 +73,10 @@ SMALL_FONT_SIZE       =  9
 CODEBOX_FONT_SIZE     =  9
 TEXTBOX_FONT_SIZE     = DEFAULT_FONT_SIZE
 
-
-from tkinter import filedialog
+try:
+	from tkinter import filedialog
+except ImportError:
+	import tkFileDialog
 
 #-------------------------------------------------------------------
 # various boxes built on top of the basic buttonbox

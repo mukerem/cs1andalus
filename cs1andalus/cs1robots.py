@@ -15,12 +15,12 @@
 #
 import logging
 import sys as _sys
-import cs1graphics as _g
-import easygui as _easygui
+import cs1andalus.cs1graphics as _g
+import cs1andalus.easygui as _easygui
 import re as _re
 import time as _time
 
-from cs1robots_images import _robot_images
+from cs1andalus.cs1robots_images import _robot_images
 
 # PIL isn't actually used in cs1robots, but is needed to use
 # cs1graphics properly.  So we make sure it is there, as otherwise

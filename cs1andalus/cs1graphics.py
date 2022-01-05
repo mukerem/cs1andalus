@@ -46,31 +46,33 @@ import base64 as _base64
 # change in module names for Python 2 vs 3
 
 try:
-    import cStringIO as _cStringIO # python2
+    from cStringIO import StringIO as _cStringIO 
+    from cStringIO import StringIO as _bytesIO 
 except ImportError:
-    from io import StringIO as _cStringIO
+    from io import StringIO as _cStringIO # python3
+    from io import BytesIO as _bytesIO # python3
 
 try:
-    import Queue as _Queue
-except ImportError:
     import queue as _Queue     # Python 3
-
-
-try:    
-    import thread as _thread
 except ImportError:
-    import _thread as _thread  # Python 3
+    import Queue as _Queue
+
 
 try:    
-    import Tkinter as _Tkinter
+    import _thread as _thread  # Python 3
+except ImportError:
+    import thread as _thread
+
+try:    
+    import tkinter as _Tkinter # Python 3
 except ImportError:
     try:
-        import tkinter as _Tkinter # Python 3
+        import Tkinter as _Tkinter
     except ImportError:
         raise ImportError('cs1graphics requires that Tkinter be installed')
 
 try:
-    import PIL.Image as _Image
+    import PIL.Image as _Image # python 3
     import PIL.ImageDraw as _ImageDraw
     import PIL.ImageTk as _ImageTk
 except ImportError:
@@ -1491,7 +1493,10 @@ class _GraphicsManager:
                     i = _Tkinter.PhotoImage(file=command[1])
                 else:
                     data = _base64.b64decode(s[7:])
-                    r = _cStringIO.StringIO(data)
+                    try:
+                        r = _cStringIO(data)
+                    except:
+                        r = _bytesIO(data)
                     i = _ImageTk.PhotoImage(_Image.open(r).convert('RGBA'))
             except:
                 good = False
